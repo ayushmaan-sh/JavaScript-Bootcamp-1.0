@@ -134,7 +134,7 @@ const tatalUsers = users.length;
 const firstUser = users[0];
 
 
-//  - Assignment 9 - Write a function that takes an array of numbers as input, and returns a new array with only even values.
+ -//  Assignment 9 - Write a function that takes an array of numbers as input, and returns a new array with only even values.
 
 function evenNumbers(arr){
     return arr.filter(num => num%2==0)
