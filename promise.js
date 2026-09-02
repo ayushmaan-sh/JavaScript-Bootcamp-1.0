@@ -91,3 +91,25 @@ writeFilePromisified("file.txt", "Hello Ayushmaan!", "utf-8")
     .catch(function(err){
         console.log("Error While writing file:",err)
     })
+
+
+// Assignment - Using fsReadFilePromisified and writeFilePromisified, make an new function called readAndWriteFilePromisified which reads the file first then convert the data into uppercase.
+
+const readAndWriteFilePromisified = (fileName, encoding) => {
+    return new Promise(function(resolve, reject){
+        fsReadFilePromisified(fileName, encoding)
+            .then(function(contents){
+                contents = contents.toUpperCase()
+                writeFilePromisified(fileName, contents, encoding)
+                resolve()
+            })
+    })
+}
+
+readAndWriteFilePromisified("file.txt", "utf-8")
+    .then(function(){
+        console.log("Data converted to uppercase!")
+    })
+    .catch(function(err){
+        console.log(err)
+    })
