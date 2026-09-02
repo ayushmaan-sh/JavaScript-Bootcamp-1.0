@@ -59,3 +59,35 @@ setTimeoutPromisified(3000)
     .then(function () {
         console.log("3 seconds has been passed.")
     })
+
+
+// const writeData = () =>{
+//     fs.writeFile("file.txt", "Hello JS!", "utf-8", (err)=>{
+//         if(err){
+//             console.log("Error while writing file:", err)
+//             return;
+//         } else {
+//             console.log("File written successfully!")
+//         }
+//     })
+// }
+
+// writeData()
+
+function writeFilePromisified(fileName, content, encoding){
+    return new Promise(function(resolve, reject){
+        fs.writeFile(fileName, content, encoding, function(err){
+            if(err){
+                reject(err)
+            } else {
+                resolve()
+            }
+        })
+    })
+}
+
+writeFilePromisified("file.txt", "Hello Ayushmaan!", "utf-8")
+    .then(console.log("File Written Successfully!"))
+    .catch(function(err){
+        console.log("Error While writing file:",err)
+    })
