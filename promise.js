@@ -113,3 +113,7 @@ readAndWriteFilePromisified("file.txt", "utf-8")
     .catch(function(err){
         console.log(err)
     })
+
+// Tomorrow's revision topics : 
+// Write the promisified versions of - readFile, writeFile, setTimeout
+// do assignment  again
