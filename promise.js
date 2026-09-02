@@ -42,3 +42,20 @@ fsReadFilePromisified("file.txt", "utf-8")
     .catch(function (err) {
         console.log(err);
     })
+
+
+// Promisified version of setTimeout
+
+
+function setTimeoutPromisified(time) {
+    return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve()
+        }, time)
+    })
+}
+
+setTimeoutPromisified(3000)
+    .then(function () {
+        console.log("3 seconds has been passed.")
+    })
