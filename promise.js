@@ -19,48 +19,72 @@
 
 // Once fulfilled or rejected, the Promise is **settled** and cannot change state. 
 
-const { rejects } = require("assert")
 const fs = require("fs")
 
-// promisified version of fs.readFile
 const readFilePromisified = (fileName, encoding) => {
-    return new Promise(function(resolve, reject){
-        fs.readFile(fileName, encoding, function(err, content){
+    return new Promise((resolve, reject) => {
+        fs.readFile(fileName, encoding, function(err, data){
             if(err){
                 reject()
-                console.log("Error while reading data.")
-                return
-            } else {
-                resolve(content)
-            }
+                console.log("Error while reading file OR file not found!")
+                return;
+            } else{
+                resolve(data)
+             }
         })
     })
 }
 
 readFilePromisified("file.txt", "utf-8")
-    .then(function(content){
-        console.log(content)
+    .then(function(data){
+        console.log(data)
     })
     .catch(function(err){
         console.log(err)
     })
 
+
 const writeFilePromisified = (fileName, content, encoding) => {
-    return new Promise(function(resolve, reject){
-        fs.writeFile(fileName, content, encoding, function(err){
-            if(err){
-                reject()
-                console.log("Error while writing file!")
-                return;
-            } else {
-                resolve()
-            }
-        })
+   return new Promise((resolve, reject)=>{
+    fs.writeFile(fileName, content, encoding, (err)=>{
+        if(err){
+            reject()
+            console.log("Something went wrong!")
+            return
+        }
+        else {
+            resolve()
+        }
+    })
+   })
+}
+
+writeFilePromisified("file.txt", "Hello JavaScript", "utf-8")
+    .then(console.log("Data written success."))
+    .catch((err)=>{
+        console.log(err)
+    })
+
+
+const readAndWriteFile = (fileName, encoding) => {
+    return new Promise((resolve, reject)=>{
+        readFilePromisified(fileName, encoding)
+            .then((content)=>{
+                content = content.toUpperCase()
+                writeFilePromisified(fileName, content, encoding)
+                    .then(()=>resolve(content))
+                    .catch((err)=>reject(err))
+            })
+            .catch((err)=>{
+                reject(err)
+            })
     })
 }
 
-writeFilePromisified("file.txt", "Hello Ayushmaan", "utf-8")
-    .then(console.log("File written!"))
-    .catch(function(err){
+readAndWriteFile("file.txt", "utf-8")
+    .then((data)=>{
+        console.log(data)
+    })
+    .catch((err)=>{
         console.log(err)
     })
